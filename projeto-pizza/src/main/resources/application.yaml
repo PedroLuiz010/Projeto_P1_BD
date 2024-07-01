@@ -1,0 +1,52 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      force: true
+  shutdown: graceful
+spring:
+  application:
+    name: pizzaria-api
+  profiles:
+    active: ${pizzaria-api.spring.profiles.active:dev}
+  datasource:
+    driver-class-name: ${pizzaria-api.datasource.driver-class-name}
+    password: ${pizzaria-api.datasource.password}
+    username: ${pizzaria-api.datasource.username}
+    url: ${pizzaria-api.datasource.url}
+    hikari:
+      maximum-pool-size: ${pizzaria-api.datasource.hikari.maximum-pool-size}
+  web:
+    resources:
+      add-mappings: false
+  jpa:
+    open-in-view: ${pizzaria-api.jpa.open-in-view}
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: ${pizzaria-api.jpa.properties.hibernate.enable_lazy_load_no_trans}
+    hibernate:
+      ddl-auto: ${pizzaria-api.jpa.hibernate.ddl-auto}
+    show-sql: ${pizzaria-api.jpa.show-sql}
+  h2:
+    console:
+      enabled: ${pizzaria-api.h2.console.enabled}
+      path: ${pizzaria-api.h2.console.path}
+      settings:
+        web-allow-others: ${pizzaria-api.h2.console.settings.web-allow-others}
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: non_null
+springdoc:
+  swagger-ui:
+    enabled: ${pizzaria-api.springdoc.swagger-ui.enabled}
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+
+openapi-servers-urls: ${pizzaria-api.openapi-servers-urls}
+
+logging:
+  pattern:
+    console: "%red(%d{yyyy-MM-dd'T'HH:mm:ssXXX}) %magenta([%thread]) [${spring.application.name}, %X{traceId:-}, %X{spanId:-}] %highlight(%-5level) %logger{36}.%M - %msg%n"
